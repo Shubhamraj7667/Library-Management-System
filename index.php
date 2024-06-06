@@ -204,11 +204,23 @@
   <div class="container">
 
 
-    <h1>Hello, world!</h1>
+    <h1>LIBRARY_MANAGEMENT_SYSTEM</h1>
     <br>
-    <h1><button type="button" class="btn btn-primary float" data-bs-toggle="modal" data-bs-target="#Student_Addmodel">
+    <h1><button type="button" class="float-sm-end" data-bs-toggle="modal" data-bs-target="#Student_Addmodel">
         ADD
       </button></h1>
+      <p>
+  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">
+    ABOUT
+  </button>
+</p>
+<div style="min-height: 120px;">
+  <div class="collapse collapse-horizontal" id="collapseWidthExample">
+    <div class="card card-body" style="width: 300px;">
+      This is some placeholder content for a horizontal collapse. It's hidden by default and shown when triggered.
+    </div>
+  </div>
+</div>
 
     <table class="table">
       <thead>
@@ -241,6 +253,30 @@
     $(document).ready(function () {
       getdata();
 
+
+
+      //for DELETE
+
+
+        $(document).on("click",".delete_btn", function(){
+          var stud_id = $(this).closest('tr').find('.stud_id').text();
+
+          $.ajax({
+            type: "POST",
+            url: "ajax-crud/code.php",
+            data: {
+              'checking_delete': true,
+              'stud_id' : stud_id,
+            },
+            success: function (response) {
+
+              $('.message-show').append('<div class="alert alert-success alert-dismissible fade show" role="alert"> <strong>Hey! </strong> '+response+'.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
+            $('.studentdata').html(" ");
+            getdata();
+              
+            }
+          });
+        })
 
       //for view
       $(document).on("click", ".viewbtn", function () {
@@ -389,13 +425,8 @@
 
      
     
+  
     
-
-
-
-
-
-
     function getdata() {
 
 
@@ -420,7 +451,7 @@
                 + '<td>' + value['expiry_date'] + '</td>'
                 + '<td><a href="#" class = "badge btn btn-info viewbtn">VIEW</a>'
                 + '<a href="#" class = "badge btn btn-primary edit_btn">EDIT</a>'
-                + '<a href="#" class = "badge btn btn-danger">DELETE</a> </td>'
+                + '<a href="#" class = "badge btn btn-danger delete_btn">DELETE</a> </td>'
                 + '</tr>'
               )
 

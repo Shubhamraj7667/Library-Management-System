@@ -110,3 +110,18 @@ if(isset($_POST["checking_update"])){
     }
 }
 
+
+
+if(isset($_POST["checking_delete"])){
+    $id = $_POST["stud_id"];
+
+    $query = "DELETE FROM students WHERE id = '$id'";
+    $query_run = mysqli_query($conn,$query);
+
+    if($query_run){
+        echo $return = "Successfully Deleted";
+    }else{
+        echo $return = "Something Went Wrong.!";
+    }
+
+}
